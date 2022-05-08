@@ -11,7 +11,7 @@ import zipfile
 
 import os.path as osp
 
-from iotools import mkdir_if_missing
+from datasets.iotools import mkdir_if_missing
 from .bases import BaseImageDataset
 
 
