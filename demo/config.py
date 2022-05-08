@@ -16,8 +16,8 @@ import os
 
 class Config():
     dataset_name = 'Occluded_Duke'
-    root = '/home/worker/User/LPT/datasets'
-    # root = 'D://Datasets'
+    # root = '/home/worker/User/LPT/datasets'
+    root = 'D://Datasets'
     num_workers = 0
     num_classes = 1000
     image_size = [224, 224]  # 输入和输出的图片尺寸
