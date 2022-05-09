@@ -21,6 +21,6 @@ class Config():
     num_workers = 0
     num_classes = 1000
     image_size = [224, 224]  # 输入和输出的图片尺寸
-    batch_size = 8
+    batch_size = 1
     max_epoch = 4000
     save_img_path = './generate_img'  # 生成的图片保存路径

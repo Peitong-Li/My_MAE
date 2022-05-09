@@ -125,7 +125,7 @@ class MaskedAutoencoderViT(nn.Module):
         N, L, D = x.shape
         len_keep = int(L * (1 - mask_ratio))
 
-        patch_size = self.patch_embed.patch_size
+        patch_size = self.patch_embed.patch_size[0]
         avg_pool = nn.AvgPool2d(patch_size, patch_size)
         mask_index = avg_pool(masks.to(dtype=torch.float32)).view(masks.shape[0], -1)
         for i in range(mask_index.shape[0]):
@@ -133,8 +133,6 @@ class MaskedAutoencoderViT(nn.Module):
                 noise = torch.rand(N, masks.shape[1] // patch_size, device=x.device)
                 noise = noise >= 0.5
         mask_index = (mask_index != 1).to(torch.int)
-
-
         ids_shuffle = torch.argsort(mask_index, dim=1)
         ids_restore = torch.argsort(ids_shuffle, dim=1)
         ids_keep = ids_shuffle[:, :len_keep]
@@ -145,7 +143,7 @@ class MaskedAutoencoderViT(nn.Module):
         mask[:, :len_keep] = 0
         # unshuffle to get the binary mask
         mask = torch.gather(mask, dim=1, index=ids_restore)
-        return x, mask, ids_restore
+        return x_masked, mask, ids_restore
 
     def random_masking(self, x, mask_ratio):
         """

@@ -221,7 +221,7 @@ def run_batch_image(img, model, img_name):
     # plt.show()
     plt.savefig(f'./result/{img_name}.jpg')
 
-def visual(model, loss, y, mask, x):
+def visual(model, loss, y, mask, x, n_iter):
     batch = x.shape[0]
     y = model.unpatchify(y)
     y = torch.einsum('nchw->nhwc', y).detach().cpu()
@@ -259,8 +259,8 @@ def visual(model, loss, y, mask, x):
         plt.subplot(batch, 4, sum)
         sum += 1
         new_show_image(im_paste[i], "reconstruction + visible")
-    plt.show()
-    # plt.savefig(f'./result/{img_name}.jpg')
+    # plt.show()
+    plt.savefig(f'./result/{str(n_iter)}.jpg')
 
 
 def main(args):
@@ -315,7 +315,7 @@ def main(args):
         imgs = imgs.to(device, non_blocking=True)
         masks = masks.to(device)
         loss, y, mask = model(imgs, mask_ratio=0.75, masks=masks)
-        visual(model, loss, y, mask, imgs)
+        visual(model, loss, y, mask, imgs, n_iter)
 
 
 if __name__ == '__main__':
